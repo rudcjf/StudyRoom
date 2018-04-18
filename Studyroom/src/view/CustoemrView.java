@@ -14,6 +14,9 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CustoemrView extends JFrame {
 	private JTextField tfName;
@@ -21,29 +24,23 @@ public class CustoemrView extends JFrame {
 	private JTextField tfAdr;
 	private JTextField tfMail;
 	public CustoemrView() {
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{345, 0, 29, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
-		getContentPane().setLayout(gridBagLayout);
+		setSize(800, 600);
+		setResizable(false);
+		
+		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_Main1 = new JPanel();
-		GridBagConstraints gbc_panel_Main1 = new GridBagConstraints();
-		gbc_panel_Main1.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_Main1.fill = GridBagConstraints.BOTH;
-		gbc_panel_Main1.gridx = 0;
-		gbc_panel_Main1.gridy = 0;
-		getContentPane().add(panel_Main1, gbc_panel_Main1);
+		panel_Main1.setBackground(Color.LIGHT_GRAY);
+		getContentPane().add(panel_Main1, BorderLayout.NORTH);
 		GridBagLayout gbl_panel_Main1 = new GridBagLayout();
 		gbl_panel_Main1.columnWidths = new int[]{17, 490, 0, 0};
-		gbl_panel_Main1.rowHeights = new int[]{41, 242, 0};
+		gbl_panel_Main1.rowHeights = new int[]{41, 446, 0};
 		gbl_panel_Main1.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_panel_Main1.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		panel_Main1.setLayout(gbl_panel_Main1);
 		
 		JLabel lblCustomer = new JLabel("\uD68C\uC6D0\uAD00\uB9AC");
-		lblCustomer.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 30));
+		lblCustomer.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 30));
 		GridBagConstraints gbc_lblCustomer = new GridBagConstraints();
 		gbc_lblCustomer.anchor = GridBagConstraints.NORTH;
 		gbc_lblCustomer.fill = GridBagConstraints.HORIZONTAL;
@@ -61,15 +58,11 @@ public class CustoemrView extends JFrame {
 		panel_Main1.add(scrollPane, gbc_scrollPane);
 		
 		JPanel panel_Main2 = new JPanel();
-		GridBagConstraints gbc_panel_Main2 = new GridBagConstraints();
-		gbc_panel_Main2.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_Main2.fill = GridBagConstraints.BOTH;
-		gbc_panel_Main2.gridx = 0;
-		gbc_panel_Main2.gridy = 1;
-		getContentPane().add(panel_Main2, gbc_panel_Main2);
+		getContentPane().add(panel_Main2, BorderLayout.CENTER);
 		panel_Main2.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_Sub1 = new JPanel();
+		panel_Sub1.setBackground(Color.LIGHT_GRAY);
 		panel_Main2.add(panel_Sub1, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_Sub1 = new GridBagLayout();
 		gbl_panel_Sub1.columnWidths = new int[]{28, 0, 57, 28, 28, 0, 12, 28, 32, 0, 0, 0};
@@ -79,6 +72,7 @@ public class CustoemrView extends JFrame {
 		panel_Sub1.setLayout(gbl_panel_Sub1);
 		
 		JLabel lblName = new JLabel("\uC774\uB984 ");
+		lblName.setFont(new Font("±¼¸²", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblName = new GridBagConstraints();
 		gbc_lblName.fill = GridBagConstraints.VERTICAL;
 		gbc_lblName.anchor = GridBagConstraints.WEST;
@@ -88,6 +82,7 @@ public class CustoemrView extends JFrame {
 		panel_Sub1.add(lblName, gbc_lblName);
 		
 		JLabel lblTel = new JLabel("\uC804\uD654 ");
+		lblTel.setFont(new Font("±¼¸²", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblTel = new GridBagConstraints();
 		gbc_lblTel.anchor = GridBagConstraints.WEST;
 		gbc_lblTel.insets = new Insets(0, 0, 5, 5);
@@ -96,6 +91,7 @@ public class CustoemrView extends JFrame {
 		panel_Sub1.add(lblTel, gbc_lblTel);
 		
 		JLabel lblAdr = new JLabel("\uC8FC\uC18C ");
+		lblAdr.setFont(new Font("±¼¸²", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblAdr = new GridBagConstraints();
 		gbc_lblAdr.anchor = GridBagConstraints.WEST;
 		gbc_lblAdr.insets = new Insets(0, 0, 5, 5);
@@ -104,6 +100,7 @@ public class CustoemrView extends JFrame {
 		panel_Sub1.add(lblAdr, gbc_lblAdr);
 		
 		JLabel lblMail = new JLabel("\uBA54\uC77C ");
+		lblMail.setFont(new Font("±¼¸²", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblMail = new GridBagConstraints();
 		gbc_lblMail.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMail.anchor = GridBagConstraints.WEST;
@@ -150,29 +147,42 @@ public class CustoemrView extends JFrame {
 		panel_Sub1.add(tfMail, gbc_tfMail);
 		
 		JPanel panel_Main3 = new JPanel();
-		GridBagConstraints gbc_panel_Main3 = new GridBagConstraints();
-		gbc_panel_Main3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_panel_Main3.gridx = 0;
-		gbc_panel_Main3.gridy = 2;
-		getContentPane().add(panel_Main3, gbc_panel_Main3);
+		panel_Main3.setBackground(Color.LIGHT_GRAY);
+		getContentPane().add(panel_Main3, BorderLayout.SOUTH);
 		panel_Main3.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_Sub2 = new JPanel();
+		panel_Sub2.setBackground(Color.LIGHT_GRAY);
 		panel_Main3.add(panel_Sub2, BorderLayout.EAST);
 		
 		JButton btnNewButton = new JButton("\uCD94\uAC00");
-		btnNewButton.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 13));
+		btnNewButton.setBackground(Color.LIGHT_GRAY);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 15));
 		panel_Sub2.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("\uC218\uC815");
-		btnNewButton_1.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 13));
+		btnNewButton_1.setBackground(Color.LIGHT_GRAY);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_1.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 15));
 		panel_Sub2.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("\uC0AD\uC81C");
-		btnNewButton_2.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 13));
+		btnNewButton_2.setBackground(Color.LIGHT_GRAY);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_2.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 15));
 		panel_Sub2.add(btnNewButton_2);
 		
-		JLabel lblNewLabel = new JLabel("   ");
+		JLabel lblNewLabel = new JLabel("         ");
 		panel_Sub2.add(lblNewLabel);
 	}
 
