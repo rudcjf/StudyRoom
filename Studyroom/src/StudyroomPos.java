@@ -2,6 +2,6 @@
 public class StudyroomPos {
 
 	public static void main(String[] args) {
-		System.out.println("HelWorld");
+		System.out.println("Hello World");
 	}
 }
