@@ -16,15 +16,20 @@ import javax.swing.BoxLayout;
 import javax.swing.JTextArea;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class StudyroomView extends JFrame {
 	private JTextField tfMenu;
 	private JTextField tfMainChat;
 	public StudyroomView() {
+		setSize(800,600);
+		setResizable(false);
+		
 		getContentPane().setBackground(Color.LIGHT_GRAY);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] {310, 90, 290, 0};
-		gridBagLayout.rowHeights = new int[]{432, 0, 0};
+		gridBagLayout.rowHeights = new int[] {553, 30, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
@@ -54,24 +59,52 @@ public class StudyroomView extends JFrame {
 		panel_Menu.setLayout(new GridLayout(3, 3, 10, 10));
 		
 		JButton btnAme = new JButton("아메리카노");
+		btnAme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_Menu.add(btnAme);
 		
 		JButton btnUAme = new JButton("유자아메");
+		btnUAme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_Menu.add(btnUAme);
 		
 		JButton btnCidir = new JButton("사이다");
+		btnCidir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_Menu.add(btnCidir);
 		
 		JButton btnCoke = new JButton("콜라");
+		btnCoke.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_Menu.add(btnCoke);
 		
 		JButton btnOrg = new JButton("오렌지쥬스");
+		btnOrg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_Menu.add(btnOrg);
 		
 		JButton btnBerry = new JButton("딸기스무디");
+		btnBerry.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_Menu.add(btnBerry);
 		
 		JButton btnMang = new JButton("망고쥬스");
+		btnMang.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_Menu.add(btnMang);
 		
 		JPanel panel_MenuJumun = new JPanel();
@@ -92,9 +125,17 @@ public class StudyroomView extends JFrame {
 		panel_JumumBtn.setLayout(new BorderLayout(0, 0));
 		
 		JButton btnJumun = new JButton("주문");
+		btnJumun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_JumumBtn.add(btnJumun, BorderLayout.NORTH);
 		
 		JButton btnJumunClr = new JButton("취소");
+		btnJumunClr.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_JumumBtn.add(btnJumunClr, BorderLayout.SOUTH);
 		
 		JPanel panel_Main2 = new JPanel();
@@ -125,6 +166,10 @@ public class StudyroomView extends JFrame {
 		panel_MainChat.add(taMainChat, BorderLayout.CENTER);
 		
 		tfMainChat = new JTextField();
+		tfMainChat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel_MainChat.add(tfMainChat, BorderLayout.SOUTH);
 		tfMainChat.setColumns(10);
 	}
