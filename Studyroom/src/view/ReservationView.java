@@ -21,6 +21,12 @@ import java.awt.event.ActionEvent;
 public class ReservationView extends JFrame {
 	private JTextField tfStartTime;
 	private JTextField tfEndTime;
+	
+	JButton btn101, btn102, btn103, btn104, btn201, btn202, btn203, btn204; 	
+	JButton btn301, btn302, btn303, btn304, btn401, btn402, btn403,  btn404;
+	
+	
+	
 	public ReservationView () {
 		setSize(800,600);
 		setResizable(false);
@@ -52,112 +58,112 @@ public class ReservationView extends JFrame {
 		panel_Main1.add(panel_btnStudyroom, BorderLayout.CENTER);
 		panel_btnStudyroom.setLayout(new GridLayout(4, 4, 10, 10));
 		
-		JButton btn101 = new JButton("101 호");
+		btn101 = new JButton("101 호");
 		btn101.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn101);
 		
-		JButton btn102 = new JButton("102 호");
+		btn102 = new JButton("102 호");
 		btn102.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn102);
 		
-		JButton btn103 = new JButton("103 호");
+		btn103 = new JButton("103 호");
 		btn103.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn103);
 		
-		JButton btn105 = new JButton("104 호");
-		btn105.addActionListener(new ActionListener() {
+		btn104 = new JButton("104 호");
+		btn104.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		panel_btnStudyroom.add(btn105);
+		panel_btnStudyroom.add(btn104);
 		
-		JButton btn201 = new JButton("201 호");
+		btn201 = new JButton("201 호");
 		btn201.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn201);
 		
-		JButton btn202 = new JButton("202 호");
+		btn202 = new JButton("202 호");
 		btn202.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn202);
 		
-		JButton btn203 = new JButton("203 호");
+		btn203 = new JButton("203 호");
 		btn203.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn203);
 		
-		JButton btn204 = new JButton("204 호");
+		btn204 = new JButton("204 호");
 		btn204.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn204);
 		
-		JButton btn301 = new JButton("301 호");
+		btn301 = new JButton("301 호");
 		btn301.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn301);
 		
-		JButton btn302 = new JButton("302 호");
+		btn302 = new JButton("302 호");
 		btn302.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn302);
 		
-		JButton btn303 = new JButton("303 호");
+		btn303 = new JButton("303 호");
 		btn303.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn303);
 		
-		JButton btn304 = new JButton("304 호");
+		btn304 = new JButton("304 호");
 		btn304.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn304);
 		
-		JButton btn401 = new JButton("401 호");
+		btn401 = new JButton("401 호");
 		btn401.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn401);
 		
-		JButton btn402 = new JButton("402 호");
+		btn402 = new JButton("402 호");
 		btn402.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn402);
 		
-		JButton btn403 = new JButton("403 호");
+		btn403 = new JButton("403 호");
 		btn403.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel_btnStudyroom.add(btn403);
 		
-		JButton btn404 = new JButton("404 호");
+		btn404 = new JButton("404 호");
 		btn404.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -195,7 +201,7 @@ public class ReservationView extends JFrame {
 		JPanel panel_Option = new JPanel();
 		panel_Option.setBackground(Color.LIGHT_GRAY);
 		panel_Center.add(panel_Option, BorderLayout.NORTH);
-		panel_Option.setLayout(new BorderLayout(10, 10));
+		panel_Option.setLayout(new BorderLayout(10, 20));
 		
 		JPanel panel_Date = new JPanel();
 		panel_Date.setBackground(Color.LIGHT_GRAY);
@@ -241,6 +247,11 @@ public class ReservationView extends JFrame {
 		tfEndTime.setColumns(10);
 		panel_EndTime.add(tfEndTime);
 		
+		JLabel lblNewLabel = new JLabel("<html>\r\n**사용방법**<br/>\r\n먼저 사용하시고 싶은 날짜와<br/>\r\n시간을 입력해 주세요.<br/>\r\n예시)<br/>\r\n날      짜 : 09/11<br/>\r\n시작시간 : 12:00<br/>\r\n종료시간 : 13:00<br/>\r\n입력이 완료되면 Enter를 입력해주세요.<br/>\r\n입력하신 시간에 가능한 Studyroom이<br/>\r\n표현되고 클릭하신후 확인을 누르시면<br/>\r\n예약이 완료됩니다.\r\n</html>");
+		lblNewLabel.setFont(new Font("굴림", Font.PLAIN, 16));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_Center.add(lblNewLabel, BorderLayout.CENTER);
+		
 		JPanel panel_btnReservation = new JPanel();
 		panel_btnReservation.setBackground(Color.LIGHT_GRAY);
 		panel_Main2.add(panel_btnReservation, BorderLayout.SOUTH);
@@ -261,4 +272,16 @@ public class ReservationView extends JFrame {
 		panel_btnReservation.add(btnClear, BorderLayout.EAST);
 	}
 
+	public void enterTime(){
+		//enter를 수행시 btn들을 enable/disable
+	}
+	
+	public void btnRoom(){
+		//해당 버튼을 클릭시 joptionframe을 통하여 예약 할 내용을 보이게 한다. 확인을 통하여 결제 완료할수 있음
+		
+	}
+	
+	
+	
+	
 }
