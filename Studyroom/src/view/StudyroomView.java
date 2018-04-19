@@ -20,8 +20,26 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class StudyroomView extends JFrame {
-	private JTextField tfMenu;
+	private JTextArea taMenu;
 	private JTextField tfMainChat;
+	
+	
+	JButton btnAme, btnUAme, btnCidir, btnCoke, btnOrg, btnBerry,btnMang ,btnJumun, btnJumunClr;
+	int[][] btnArry = new int[7][2];
+
+	String[] btnName = { "아메리카노", "유자아메리카노", "사이다", "콜라", "오렌지", "딸기스무디", "망고 쥬스"};
+	int[] btnPrice = { 2000, 3000, 1000, 1000, 2500, 3500, 4000};
+	int cnt = 0, total= 0;
+	
+	// index 배열 초기화
+		void init() {
+			for (int i = 0; i < btnArry.length; i++) {
+				btnArry[i][0] = i;
+				btnArry[i][1] = 0;
+			}
+		}
+	
+	
 	public StudyroomView() {
 		setSize(800,600);
 		setResizable(false);
@@ -58,51 +76,58 @@ public class StudyroomView extends JFrame {
 		panel_Main1.add(panel_Menu, BorderLayout.CENTER);
 		panel_Menu.setLayout(new GridLayout(3, 3, 10, 10));
 		
-		JButton btnAme = new JButton("아메리카노");
+		btnAme = new JButton("아메리카노");
 		btnAme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menuBtn(btnAme);
 			}
 		});
 		panel_Menu.add(btnAme);
 		
-		JButton btnUAme = new JButton("유자아메");
+		btnUAme = new JButton("유자아메");
 		btnUAme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menuBtn(btnUAme);
 			}
 		});
 		panel_Menu.add(btnUAme);
 		
-		JButton btnCidir = new JButton("사이다");
+		btnCidir = new JButton("사이다");
 		btnCidir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menuBtn(btnCidir);
 			}
 		});
 		panel_Menu.add(btnCidir);
 		
-		JButton btnCoke = new JButton("콜라");
+		btnCoke = new JButton("콜라");
 		btnCoke.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menuBtn(btnCoke);
 			}
 		});
 		panel_Menu.add(btnCoke);
 		
-		JButton btnOrg = new JButton("오렌지쥬스");
+		btnOrg = new JButton("오렌지쥬스");
 		btnOrg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menuBtn(btnOrg);
 			}
 		});
 		panel_Menu.add(btnOrg);
 		
-		JButton btnBerry = new JButton("딸기스무디");
+		btnBerry = new JButton("딸기스무디");
 		btnBerry.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menuBtn(btnBerry);
 			}
 		});
 		panel_Menu.add(btnBerry);
 		
-		JButton btnMang = new JButton("망고쥬스");
+		btnMang = new JButton("망고쥬스");
 		btnMang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				menuBtn(btnMang);
 			}
 		});
 		panel_Menu.add(btnMang);
@@ -115,10 +140,8 @@ public class StudyroomView extends JFrame {
 		panel_MenuWest.setBackground(Color.LIGHT_GRAY);
 		panel_MenuJumun.add(panel_MenuWest, BorderLayout.WEST);
 		
-		tfMenu = new JTextField();
-		tfMenu.setFont(new Font("굴림", Font.PLAIN, 16));
-		panel_MenuJumun.add(tfMenu, BorderLayout.CENTER);
-		tfMenu.setColumns(10);
+		taMenu = new JTextArea();
+		panel_MenuJumun.add(taMenu, BorderLayout.CENTER);
 		
 		JPanel panel_JumumBtn = new JPanel();
 		panel_MenuJumun.add(panel_JumumBtn, BorderLayout.EAST);
@@ -172,6 +195,60 @@ public class StudyroomView extends JFrame {
 		});
 		panel_MainChat.add(tfMainChat, BorderLayout.SOUTH);
 		tfMainChat.setColumns(10);
+	}
+	
+	
+
+	public void menuBtn(JButton btn){
+		if(btn == btnAme){
+			btnArry[0][1]++;
+			menuShow();
+		}else if(btn == btnUAme){
+			btnArry[1][1]++;
+			menuShow();
+		}else if(btn == btnCidir){
+			btnArry[2][1]++;
+			menuShow();
+		}else if(btn == btnCoke){
+			btnArry[3][1]++;
+			menuShow();
+		}else if(btn == btnOrg){
+			btnArry[4][1]++;
+			menuShow();
+		}else if(btn == btnBerry){
+			btnArry[5][1]++;
+			menuShow();
+		}else if(btn == btnMang){
+			btnArry[6][1]++;
+			menuShow();
+		}else if(btn == btnJumun){
+			//채팅창과 DB 와 연동되어 주문목록 Text를 만들어 각각전송
+			init();
+			menuShow();
+		}else if(btn == btnJumunClr){
+			init();
+			menuShow();
+		}
+	}
+	
+	public void menuShow() {
+		taMenu.setText(null);
+		int sum = 0;
+
+		for (int i = 0; i < btnArry.length; i++) {
+			if (btnArry[i][1] > 0) {
+				if (cnt == 4) {
+					taMenu.setText(taMenu.getText() + "\n");
+				}
+				taMenu.setText(taMenu.getText() + " " + btnName[btnArry[i][0]] + " : " + btnArry[i][1] + "개,");
+				sum += btnArry[i][1] * btnPrice[btnArry[i][0]];
+				cnt++;
+			}
+		}
+		taMenu.setText(taMenu.getText() + "\n 총: " + sum + "원 ");
+		total = sum;
+		cnt = 0;
+
 	}
 
 }

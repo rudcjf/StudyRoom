@@ -1,6 +1,9 @@
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -18,20 +21,23 @@ import java.awt.event.ActionEvent;
 
 import model.LoginModel;
 import model.vo.Login;
+import view.MainPosView;
+import view.StudyroomView;
 
 public class StudyroomPos extends JFrame {
+	static StudyroomPos frame;
 	private JTextField tfId;
-	private JTextField tfPass;
+	private JPasswordField tfPass;
 	JButton btnLogin;
 	LoginModel model;
 
 	public static void main(String[] args) {
 
-		StudyroomPos frame = new StudyroomPos();
+		frame = new StudyroomPos();
 		frame.setVisible(true);
 
 	}
-
+	//연결 함수
 	public void connectDB() {
 		try {
 			model = new LoginModel();
@@ -42,9 +48,53 @@ public class StudyroomPos extends JFrame {
 
 	}
 
-	public StudyroomPos() {
+	// 로그인 함수
+	public void login() {
+		// 1. 입력한 전화번호 얻어오기
+		try {
+			// 고객 로그인
+			Login vo = model.login(Integer.parseInt(tfId.getText()));
+			if (tfPass.getText().equals(vo.getCusPass())) {
+				JOptionPane.showMessageDialog(null, "고객 로그인 성공");
+				// 스터디 룸으로 화면 전환
+				frame.setVisible(false);
+				StudyroomView sView = new StudyroomView();
+				sView.setVisible(true);
+			}
+			// 사원 로그인(int값이 아닌 경우 catch)
+		} catch (NumberFormatException e) {
+			Login vo;
+			try {
+				vo = model.login(tfId.getText());
+				if (tfPass.getText().equals(vo.getCusPass())) {
+					// 매니저 로그인
+					if (tfId.getText().equals("admin")) {
+						JOptionPane.showMessageDialog(null, "admin 로그인 성공");
+						frame.setVisible(false);
+						MainPosView sView = new MainPosView();
+						sView.setVisible(true);
+					} else
+					//사원 로그인
+					JOptionPane.showMessageDialog(null, "사원 로그인 성공");
+					frame.setVisible(false);
+					MainPosView sView = new MainPosView();
+					sView.setVisible(true);
+				}
+			} catch (Exception e1) {
+				System.out.println("사원 로그인 실패" + e1.getMessage());
+			}
 
-		connectDB();
+		} catch (Exception e) {
+			System.out.println("로그인 실패" + e.getMessage());
+			e.printStackTrace();
+		}
+		// 2. Model의 로그인 메소드 login() 호출
+		// 3. 2번의 넘겨받은 값을 토대로 로그인 실행
+
+		
+	}
+
+	public StudyroomPos() {
 
 		setSize(800, 600);
 		setResizable(false);
@@ -115,7 +165,7 @@ public class StudyroomPos extends JFrame {
 		gbc_lblPass.gridy = 5;
 		panel_Main2.add(lblPass, gbc_lblPass);
 
-		tfPass = new JTextField();
+		tfPass = new JPasswordField();
 		GridBagConstraints gbc_tfPass = new GridBagConstraints();
 		gbc_tfPass.fill = GridBagConstraints.HORIZONTAL;
 		gbc_tfPass.insets = new Insets(0, 0, 5, 5);
@@ -130,45 +180,11 @@ public class StudyroomPos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				Object evt = e.getSource();
-				// 다중입고 체크박스 클릭시
+				// 로그인 버튼 클릭시
 				if (evt == btnLogin) {
 					login();
 				}
 			}
-
-			// 로그인 함수
-			public void login() {
-				// 1. 입력한 전화번호 얻어오기
-				try {
-					//고객 로그인
-					Login vo = model.login(Integer.parseInt(tfId.getText()));
-					if (tfPass.getText().equals(vo.getCusPass())) {
-						System.out.println("고객 로그인 성공");
-					}
-					//사원 로그인(int값이 아닌 경우 catch)
-				} catch (NumberFormatException e) {
-					Login vo;
-					try {
-						vo = model.login(tfId.getText());
-						if (tfPass.getText().equals(vo.getCusPass())) {
-							//매니저 로그인
-							if(tfId.getText().equals("admin")){
-								System.out.println("admin 로그인 성공");
-							}else System.out.println("사원 로그인 성공");
-						}
-					} catch (Exception e1) {
-						System.out.println("사원 로그인 실패" + e1.getMessage());
-					}
-
-				} catch (Exception e) {
-					System.out.println("로그인 실패" + e.getMessage());
-				}
-				// 2. Model의 로그인 메소드 login() 호출
-				// 3. 2번의 넘겨받은 값을 토대로 로그인 실행
-
-				JOptionPane.showMessageDialog(null, "로그인");
-			}
-
 		});
 
 		btnLogin.setBackground(Color.LIGHT_GRAY);
@@ -178,6 +194,11 @@ public class StudyroomPos extends JFrame {
 		gbc_btnLogin.gridx = 4;
 		gbc_btnLogin.gridy = 5;
 		panel_Main2.add(btnLogin, gbc_btnLogin);
+
+		// 종료
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// DB접속
+		connectDB();
 
 	}
 }
