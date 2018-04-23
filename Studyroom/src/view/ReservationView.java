@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -15,16 +16,35 @@ import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
 
-public class ReservationView extends JFrame {
-	private JTextField tfStartTime;
+import model.ReservationModel;
+
+public class ReservationView extends JFrame implements ActionListener{
+	ReservationModel model;
+	
+	private JTextField tfStartTime, tfDate;
 	private JTextField tfEndTime;
 	
+	JButton[] btnArray = new JButton[16];
 	JButton btn101, btn102, btn103, btn104, btn201, btn202, btn203, btn204; 	
-	JButton btn301, btn302, btn303, btn304, btn401, btn402, btn403,  btn404;
+	JButton btn301, btn302, btn303, btn304, btn401, btn402, btn403,  btn404, btnReservation;
 	
+	int[] thirtyM ={2,4,6,9,11};;
+
+	int[] roomNum = new int[16];
+	
+	public void connectDB() {
+	      try {
+	         System.out.println("고객관리DB 연결 성공");
+	      } catch (Exception ex) {
+	         System.out.println("고객관리 연결 실패 : " + ex.getMessage());
+	      }
+
+	   }
 	
 	
 	public ReservationView () {
@@ -58,117 +78,12 @@ public class ReservationView extends JFrame {
 		panel_Main1.add(panel_btnStudyroom, BorderLayout.CENTER);
 		panel_btnStudyroom.setLayout(new GridLayout(4, 4, 10, 10));
 		
-		btn101 = new JButton("101 호");
-		btn101.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn101);
-		
-		btn102 = new JButton("102 호");
-		btn102.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn102);
-		
-		btn103 = new JButton("103 호");
-		btn103.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn103);
-		
-		btn104 = new JButton("104 호");
-		btn104.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn104);
-		
-		btn201 = new JButton("201 호");
-		btn201.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn201);
-		
-		btn202 = new JButton("202 호");
-		btn202.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn202);
-		
-		btn203 = new JButton("203 호");
-		btn203.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn203);
-		
-		btn204 = new JButton("204 호");
-		btn204.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn204);
-		
-		btn301 = new JButton("301 호");
-		btn301.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn301);
-		
-		btn302 = new JButton("302 호");
-		btn302.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn302);
-		
-		btn303 = new JButton("303 호");
-		btn303.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn303);
-		
-		btn304 = new JButton("304 호");
-		btn304.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn304);
-		
-		btn401 = new JButton("401 호");
-		btn401.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn401);
-		
-		btn402 = new JButton("402 호");
-		btn402.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn402);
-		
-		btn403 = new JButton("403 호");
-		btn403.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn403);
-		
-		btn404 = new JButton("404 호");
-		btn404.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		panel_btnStudyroom.add(btn404);
+		for( int i=0; i<btnArray.length;  i++){
+			int j = i%4+1; 
+			btnArray[i] = new JButton("10"+j +"호");
+			btnArray[i].addActionListener(this);
+			panel_btnStudyroom.add(btnArray[i]);
+		}
 		
 		JPanel panel_Bottom = new JPanel();
 		panel_Bottom.setBackground(Color.LIGHT_GRAY);
@@ -212,7 +127,7 @@ public class ReservationView extends JFrame {
 		lbDate.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_Date.add(lbDate);
 		
-		JTextField tfDate = new JTextField();
+		tfDate = new JTextField();
 		panel_Date.add(tfDate);
 		tfDate.setColumns(10);
 		
@@ -240,10 +155,11 @@ public class ReservationView extends JFrame {
 		
 		tfEndTime = new JTextField();
 		tfEndTime.setToolTipText("날짜, 시작시간, 종료시간 모두입력후 Enter입력시 가능한 스터디룸이 좌측에 시각화");
-		tfEndTime.addActionListener(new ActionListener() {
+		/*tfEndTime.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				 enterTime();
 			}
-		});
+		});*/
 		tfEndTime.setColumns(10);
 		panel_EndTime.add(tfEndTime);
 		
@@ -257,9 +173,10 @@ public class ReservationView extends JFrame {
 		panel_Main2.add(panel_btnReservation, BorderLayout.SOUTH);
 		panel_btnReservation.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnReservation = new JButton("확인");
+		btnReservation = new JButton("확인");
 		btnReservation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				enterTime();
 			}
 		});
 		panel_btnReservation.add(btnReservation, BorderLayout.WEST);
@@ -270,18 +187,163 @@ public class ReservationView extends JFrame {
 			}
 		});
 		panel_btnReservation.add(btnClear, BorderLayout.EAST);
-	}
-
-	public void enterTime(){
-		//enter를 수행시 btn들을 enable/disable
-	}
-	
-	public void btnRoom(){
-		//해당 버튼을 클릭시 joptionframe을 통하여 예약 할 내용을 보이게 한다. 확인을 통하여 결제 완료할수 있음
+		
+		
+		disableBtn();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		connectReservationDB();
 		
 	}
 	
 	
+	public void connectReservationDB() {
+	      try {
+	         model = new ReservationModel();
+	         System.out.println("예약DB 연결 성공");
+	      } catch (Exception ex) {
+	         System.out.println("예약 연결 실패 : " + ex.getMessage());
+	      }
+
+	   }
+
+
+	public void enterTime(){
+		//enter를 수행시 btn들을 enable/disable
+		String datePatern = "^[0-1][0-9]/[0-3][0-9]$";
+		String startPatern ="^[0-2][0-9]:[0-6][0-9]$";
+		String endPatern = "^[0-2][0-9]:[0-6][0-9]$";
+		int checkCnt = 0;
+		String failMsg = "";
+		
+		if(Pattern.matches(datePatern,tfDate.getText())){
+			System.out.println("일치");
+			//숫자크기비교해서 12월이 넘어가거나 없는 날짜가 들어오면 안됨
+			if(Integer.parseInt(tfDate.getText().substring(0, 2)) > 12 || Integer.parseInt(tfDate.getText().substring(0, 2)) <1 ){
+				failMsg+="날짜 오류.\n";
+				failMsg +="존재하지 않는 '달' 을 입력하셨습니다.\n";
+				if(Integer.parseInt(tfDate.getText().substring(3)) >31 || Integer.parseInt(tfDate.getText().substring(3)) <1 ){
+					if(Integer.parseInt(tfDate.getText().substring(3,5))>31){
+						failMsg+="존재하지 않는 '날짜'를 입력하셨습니다.\n";
+					}else if(Integer.parseInt(tfDate.getText().substring(3,5))  == 31){
+						for(int i = 0; i < thirtyM.length;i++){
+							if(Integer.parseInt(tfDate.getText().substring(0,2))== thirtyM[i]){
+								failMsg +="해당 달에 없는 날짜 입니다..\n";
+							}
+						}
+					}else if(Integer.parseInt(tfDate.getText().substring(3,5)) > 28){
+						if(Integer.parseInt(tfDate.getText().substring(0,2))== 2){
+							failMsg +="해당 달에 없는 날짜 입니다..\n";
+						}
+					}
+				}
+			}else{
+				checkCnt++;
+			}
+		}else{
+			System.out.println("불일치");
+			failMsg +=  "날짜 형식이 일치하지 않습니다.\n";
+		}
+		if(Pattern.matches(startPatern,tfStartTime.getText())){
+			System.out.println("일치");
+			//시간비교
+			if(Integer.parseInt(tfStartTime.getText().substring(0, 2)) >23  ){
+				failMsg +="시작시간 : 시간은 24를 넘을수 없습니다.\n";
+				if(Integer.parseInt(tfStartTime.getText().substring(3)) >59 ){
+					failMsg +="시작시간 : 분은 59를 넘을수 없습니다.\n";
+				}
+			}else{
+				checkCnt++;
+			}
+		}else{
+			System.out.println("불일치");
+			failMsg +=  "시작 시간 형식이 일치하지 않습니다.\n";
+		}
+		if(Pattern.matches(endPatern,tfEndTime.getText())){
+			System.out.println("일치");
+			//숫자크기비교해서 12월이 넘어가거나 없는 날짜가 들어오면 안됨
+			if(Integer.parseInt(tfEndTime.getText().substring(0, 2)) >23  ){
+				failMsg +="종료시간 : 시간은 24를 넘을수 없습니다.\n";
+				if(Integer.parseInt(tfEndTime.getText().substring(3)) >59 ){
+					failMsg +="종료 시간 : 분은 59를 넘을수 없습니다.\n";
+				}
+			}else{
+				checkCnt++;
+			}
+		}else{
+			System.out.println("불일치");
+			failMsg +=  "종료 시간형식이 일치하지 않습니다.";
+		}
+		if(checkCnt <3){
+			JOptionPane.showMessageDialog(null, failMsg);
+			disableBtn();
+		}else{
+			//보내야하는 시간 정보 저장
+			try {
+				roomNum = model.emptyRoom(tfDate.getText(), tfStartTime.getText(), tfEndTime.getText());
+			} catch (Exception e) {
+				System.out.println("룸넘버 얻어오기 실패: " +e.getMessage());
+			}
+			enableBtn();//현재는 모든 버튼 enable
+		}
+		
+		
+	}
 	
+	public void actionPerformed(ActionEvent ev){
+		Object evt = ev.getSource();
+		for( int i=0; i<btnArray.length;  i++){
+			if( evt == btnArray[i]) {			
+					btnRoom(btnArray[i]);
+				}
+		}
+	}
+	
+	public void disableBtn(){
+		for(JButton data:btnArray ){
+			data.setEnabled(false);
+		}
+	}
+	public void enableBtn(){
+		//disable이 필요한 부분과 하지 않아야 하는것 구분
+		for(JButton data:btnArray ){
+			data.setEnabled(true);
+		}
+	}
+	
+	public void btnRoom(JButton btn){
+		//해당 버튼을 클릭시 joptionframe을 통하여 예약 할 내용을 보이게 한다. 확인을 통하여 결제 완료할수 있음
+		if(tfDate.getText().equals("") || tfEndTime.getText().equals("")|| tfStartTime.getText().equals("") ){
+			JOptionPane.showMessageDialog(null, "날짜와 시작시간, 종료시간을 모두 입력하여주세요");
+		}else{
+			String msg = "고객님께서 예약하신 내용은 "+btn.getName()+"몇시부터 몇시까지 입니다.\n '확인'버튼을 누르시면 예약내용을 확정합니다.";
+			int i = JOptionPane.showConfirmDialog(null, msg, "예약 확정", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null);
+			if(i==JOptionPane.OK_OPTION){
+				//sql문장만들어서 예약 확정으로 db에 보내기
+				tfDate.setText("");
+				tfEndTime.setText("");
+				tfStartTime.setText("");
+				enterTime();
+			}else if(i==JOptionPane.CANCEL_OPTION){
+				//아무것도 터치할필요없음
+			}
+		}
+	}
+	
+	//test용 코드 실행용
+	static ReservationView frame;
+	public static void main(String[] args) {
+
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					frame = new ReservationView();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	
+	}
 	
 }
