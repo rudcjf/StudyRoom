@@ -9,12 +9,16 @@ import java.awt.Insets;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import main.StudyRoomViewMain;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -22,6 +26,7 @@ import java.awt.event.ActionEvent;
 public class StudyroomView extends JFrame {
 	private JTextArea taMenu;
 	private JTextField tfMainChat;
+	StudyRoomViewMain main;
 	
 	
 	JButton btnAme, btnUAme, btnCidir, btnCoke, btnOrg, btnBerry,btnMang ,btnJumun, btnJumunClr;
@@ -38,7 +43,9 @@ public class StudyroomView extends JFrame {
 				btnArry[i][1] = 0;
 			}
 		}
-	
+		public void setMain(StudyRoomViewMain main) {
+			this.main = main;
+		}
 	
 	public StudyroomView() {
 		setSize(800,600);
@@ -195,6 +202,9 @@ public class StudyroomView extends JFrame {
 		});
 		panel_MainChat.add(tfMainChat, BorderLayout.SOUTH);
 		tfMainChat.setColumns(10);
+		
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	
@@ -250,5 +260,19 @@ public class StudyroomView extends JFrame {
 		cnt = 0;
 
 	}
+//	public static void main(String[] args) {
+//
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					frame = new MainPosView();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//
+//	}
 
 }

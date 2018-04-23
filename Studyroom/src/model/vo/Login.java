@@ -11,6 +11,7 @@ public class Login {
 	String c_adr;		// 주소
 	String c_mail;		// 이메일
 	
+	
 	public String getC_name() {
 		return c_name;
 	}

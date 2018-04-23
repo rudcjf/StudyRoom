@@ -1,3 +1,4 @@
+package main;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -21,22 +22,28 @@ import java.awt.event.ActionEvent;
 
 import model.LoginModel;
 import model.vo.Login;
+import model.vo.Order;
+
 import view.MainPosView;
 import view.StudyroomView;
+import java.awt.Canvas;
+import java.awt.SystemColor;
 
 public class StudyroomPos extends JFrame {
-	static StudyroomPos frame;
+	
 	private JTextField tfId;
 	private JPasswordField tfPass;
 	JButton btnLogin;
 	LoginModel model;
+	StudyRoomViewMain main;
+	int token;
 
-	public static void main(String[] args) {
-
-		frame = new StudyroomPos();
-		frame.setVisible(true);
-
-	}
+//	public static void main(String[] args) {
+//
+//		frame = new StudyroomPos();
+//		frame.setVisible(true);
+//
+//	}
 	//연결 함수
 	public void connectDB() {
 		try {
@@ -50,6 +57,7 @@ public class StudyroomPos extends JFrame {
 
 	// 로그인 함수
 	public void login() {
+		token = 0;
 		// 1. 입력한 전화번호 얻어오기
 		try {
 			// 고객 로그인
@@ -57,9 +65,7 @@ public class StudyroomPos extends JFrame {
 			if (tfPass.getText().equals(vo.getCusPass())) {
 				JOptionPane.showMessageDialog(null, "고객 로그인 성공");
 				// 스터디 룸으로 화면 전환
-				frame.setVisible(false);
-				StudyroomView sView = new StudyroomView();
-				sView.setVisible(true);
+				main.studyRoomView(main);
 			}
 			// 사원 로그인(int값이 아닌 경우 catch)
 		} catch (NumberFormatException e) {
@@ -69,16 +75,18 @@ public class StudyroomPos extends JFrame {
 				if (tfPass.getText().equals(vo.getCusPass())) {
 					// 매니저 로그인
 					if (tfId.getText().equals("admin")) {
+						//System.out.println(tfId.getText());
 						JOptionPane.showMessageDialog(null, "admin 로그인 성공");
-						frame.setVisible(false);
-						MainPosView sView = new MainPosView();
-						sView.setVisible(true);
-					} else
-					//사원 로그인
-					JOptionPane.showMessageDialog(null, "사원 로그인 성공");
-					frame.setVisible(false);
-					MainPosView sView = new MainPosView();
-					sView.setVisible(true);
+						token = 1;
+						main.mainPosView(main, token);
+					} else {
+						
+						//사원 로그인
+						JOptionPane.showMessageDialog(null, "사원 로그인 성공");
+						token = 0;
+						
+						main.mainPosView(main, token);
+					}
 				}
 			} catch (Exception e1) {
 				System.out.println("사원 로그인 실패" + e1.getMessage());
@@ -94,6 +102,10 @@ public class StudyroomPos extends JFrame {
 		
 	}
 
+	public void setMain(StudyRoomViewMain main) {
+		this.main = main;
+	}
+
 	public StudyroomPos() {
 
 		setSize(800, 600);
@@ -102,7 +114,7 @@ public class StudyroomPos extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_Main1 = new JPanel();
-		panel_Main1.setBackground(Color.LIGHT_GRAY);
+		panel_Main1.setBackground(SystemColor.activeCaption);
 		getContentPane().add(panel_Main1, BorderLayout.NORTH);
 		GridBagLayout gbl_panel_Main1 = new GridBagLayout();
 		gbl_panel_Main1.columnWidths = new int[] { 791, 0 };
@@ -131,9 +143,9 @@ public class StudyroomPos extends JFrame {
 		panel_Main2.setBackground(Color.LIGHT_GRAY);
 		getContentPane().add(panel_Main2, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_Main2 = new GridBagLayout();
-		gbl_panel_Main2.columnWidths = new int[] { 180, 185, 62, 115, 98, 92, 244, 0 };
+		gbl_panel_Main2.columnWidths = new int[] { 180, 112, 85, 62, 115, 98, 92, 244, 0 };
 		gbl_panel_Main2.rowHeights = new int[] { 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_panel_Main2.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panel_Main2.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		gbl_panel_Main2.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		panel_Main2.setLayout(gbl_panel_Main2);
@@ -143,7 +155,7 @@ public class StudyroomPos extends JFrame {
 		GridBagConstraints gbc_lblId = new GridBagConstraints();
 		gbc_lblId.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblId.insets = new Insets(0, 0, 5, 5);
-		gbc_lblId.gridx = 2;
+		gbc_lblId.gridx = 3;
 		gbc_lblId.gridy = 4;
 		panel_Main2.add(lblId, gbc_lblId);
 
@@ -151,7 +163,7 @@ public class StudyroomPos extends JFrame {
 		GridBagConstraints gbc_tfId = new GridBagConstraints();
 		gbc_tfId.fill = GridBagConstraints.HORIZONTAL;
 		gbc_tfId.insets = new Insets(0, 0, 5, 5);
-		gbc_tfId.gridx = 3;
+		gbc_tfId.gridx = 4;
 		gbc_tfId.gridy = 4;
 		panel_Main2.add(tfId, gbc_tfId);
 		tfId.setColumns(10);
@@ -161,7 +173,7 @@ public class StudyroomPos extends JFrame {
 		GridBagConstraints gbc_lblPass = new GridBagConstraints();
 		gbc_lblPass.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblPass.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPass.gridx = 2;
+		gbc_lblPass.gridx = 3;
 		gbc_lblPass.gridy = 5;
 		panel_Main2.add(lblPass, gbc_lblPass);
 
@@ -169,7 +181,7 @@ public class StudyroomPos extends JFrame {
 		GridBagConstraints gbc_tfPass = new GridBagConstraints();
 		gbc_tfPass.fill = GridBagConstraints.HORIZONTAL;
 		gbc_tfPass.insets = new Insets(0, 0, 5, 5);
-		gbc_tfPass.gridx = 3;
+		gbc_tfPass.gridx = 4;
 		gbc_tfPass.gridy = 5;
 		panel_Main2.add(tfPass, gbc_tfPass);
 		tfPass.setColumns(10);
@@ -191,7 +203,7 @@ public class StudyroomPos extends JFrame {
 		btnLogin.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
 		gbc_btnLogin.insets = new Insets(0, 0, 5, 5);
-		gbc_btnLogin.gridx = 4;
+		gbc_btnLogin.gridx = 5;
 		gbc_btnLogin.gridy = 5;
 		panel_Main2.add(btnLogin, gbc_btnLogin);
 

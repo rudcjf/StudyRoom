@@ -14,6 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
+
+import main.StudyRoomViewMain;
+
 import javax.swing.RowSorter;
 
 import java.awt.BorderLayout;
@@ -42,16 +45,20 @@ public class CustoemrView extends JFrame {
 	LoginModel model;
 	JTable tableCus;
 	CusTableModel tbModelCus;
+	StudyRoomViewMain main;
 
 	int c_num;
 
-	public static void main(String[] args) {
-
-		frame = new CustoemrView();
-		frame.setVisible(true);
-
+//	public static void main(String[] args) {
+//
+//		frame = new CustoemrView();
+//		frame.setVisible(true);
+//
+//	}
+	public void setMain(StudyRoomViewMain main) {
+		this.main = main;
 	}
-
+	
 	// DB연결
 	public void connectDB() {
 		try {
@@ -176,6 +183,7 @@ public class CustoemrView extends JFrame {
 
 		tbModelCus = new CusTableModel();
 		tableCus = new JTable(tbModelCus);
+		tableCus.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		// 마우스 클릭시 액션
 
 		tableCus.addMouseListener(new MouseAdapter() {
@@ -204,9 +212,9 @@ public class CustoemrView extends JFrame {
 		panel_Main1.setBackground(Color.LIGHT_GRAY);
 		getContentPane().add(panel_Main1, BorderLayout.NORTH);
 		GridBagLayout gbl_panel_Main1 = new GridBagLayout();
-		gbl_panel_Main1.columnWidths = new int[] { 17, 490, 0, 0 };
+		gbl_panel_Main1.columnWidths = new int[] { 17, 490, 0, 0, 0 };
 		gbl_panel_Main1.rowHeights = new int[] { 41, 446, 0 };
-		gbl_panel_Main1.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_panel_Main1.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
 		gbl_panel_Main1.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 		panel_Main1.setLayout(gbl_panel_Main1);
 
@@ -219,11 +227,28 @@ public class CustoemrView extends JFrame {
 		gbc_lblCustomer.gridx = 1;
 		gbc_lblCustomer.gridy = 0;
 		panel_Main1.add(lblCustomer, gbc_lblCustomer);
+		
+		JButton button = new JButton("돌아가기");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//화면 전환
+				main.customerViewCan(main);
+			}
+		});
+		button.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		button.setBackground(Color.LIGHT_GRAY);
+		button.setForeground(Color.BLACK);
+		GridBagConstraints gbc_button = new GridBagConstraints();
+		gbc_button.insets = new Insets(0, 0, 5, 5);
+		gbc_button.gridx = 2;
+		gbc_button.gridy = 0;
+		panel_Main1.add(button, gbc_button);
 
 		// 테이블/---------------------------------------------------------------
 		JScrollPane scrollPane = new JScrollPane(tableCus);
 
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridwidth = 2;
 		gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;

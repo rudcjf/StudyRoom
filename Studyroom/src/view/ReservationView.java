@@ -10,6 +10,9 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import main.StudyRoomViewMain;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -24,14 +27,17 @@ import java.awt.event.ActionEvent;
 import model.ReservationModel;
 
 public class ReservationView extends JFrame implements ActionListener{
+	static ReservationView frame;
 	ReservationModel model;
 	
 	private JTextField tfStartTime, tfDate;
 	private JTextField tfEndTime;
 	
+	StudyRoomViewMain main;
+	
 	JButton[] btnArray = new JButton[16];
 	JButton btn101, btn102, btn103, btn104, btn201, btn202, btn203, btn204; 	
-	JButton btn301, btn302, btn303, btn304, btn401, btn402, btn403,  btn404, btnReservation;
+	JButton btn301, btn302, btn303, btn304, btn401, btn402, btn403,  btn404, btnReservation, btnClear;
 	
 	int[] thirtyM ={2,4,6,9,11};;
 
@@ -46,6 +52,9 @@ public class ReservationView extends JFrame implements ActionListener{
 
 	   }
 	
+	public void setMain(StudyRoomViewMain main) {
+		this.main = main;
+	}
 	
 	public ReservationView () {
 		setSize(800,600);
@@ -181,9 +190,10 @@ public class ReservationView extends JFrame implements ActionListener{
 		});
 		panel_btnReservation.add(btnReservation, BorderLayout.WEST);
 		
-		JButton btnClear = new JButton("취소");
+		btnClear = new JButton("취소");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				changeWindow(btnClear);
 			}
 		});
 		panel_btnReservation.add(btnClear, BorderLayout.EAST);
@@ -193,6 +203,12 @@ public class ReservationView extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		connectReservationDB();
 		
+	}
+	
+	public void changeWindow(JButton btn){
+		if(btn == btnClear){//예시
+			main.reservationViewCan(main);
+		}
 	}
 	
 	
@@ -330,20 +346,20 @@ public class ReservationView extends JFrame implements ActionListener{
 	}
 	
 	//test용 코드 실행용
-	static ReservationView frame;
-	public static void main(String[] args) {
-
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					frame = new ReservationView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	
-	}
+//	static ReservationView frame;
+//	public static void main(String[] args) {
+//
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					frame = new ReservationView();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	
+//	}
 	
 }
